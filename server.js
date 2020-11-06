@@ -1,9 +1,14 @@
 const express = require ('express')
+const { connect } = require('mongoose')
+const connectDB = require('./config/db')
 
 const app = express()
 
 // Init middleware
-// app.use(express.json({ extended : false }))
+app.use(express.json({ extended : false }))
+
+// Connect database
+connectDB();
 
 app.get('/', (req, res) => res.json({ msg : "Welcome to My Recipe DB"}))
 
