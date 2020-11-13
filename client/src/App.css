@@ -1,0 +1,24 @@
+:root {
+  --orange-color: #f06449;
+  --black: #000000;
+  --light-white: #f5f5f5;
+  --light-grey: #dfe2e0;
+  --darker-grey: #b3bdba;
+}
+
+/* Navbar */
+
+.brand-logo {
+  color: var(--light-white);
+}
+
+nav {
+  background-color: var(--black);
+}
+
+/* Slider */
+
+.carousel-img{
+  width:200px;
+  height: 200px;
+}

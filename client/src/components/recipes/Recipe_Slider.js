@@ -1,0 +1,56 @@
+import React, {useContext} from "react";
+import Slider from "react-slick";
+import RecipeContext from '../../context/recipe/recipeContext'
+import RecipeItem from '../recipes/Recipe_Item'
+ 
+export default function RecipeSlider() {
+
+const recipeContext = useContext(RecipeContext)
+
+const { recipes } = recipeContext
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+  return (
+    <Slider {...settings}>
+      {recipes.map(recipe => (
+        <RecipeItem key={recipe.id} recipe={recipe}/>
+      ))}
+    </Slider>
+  );
+}
+
+     {/* Ingredients */}
+        {/* <div className='ingredientContainer'>
+          <div className='row ingredient-line'>
+            <div className='input-field col s6 center-align'>
+              <input
+                type='text'
+                placeholder='Please enter ingredients'
+                className='validate'
+                name='ingredient'
+                value={ingredients.ingredient}
+                onChange={onChange}
+              />
+            </div>
+            <div className='input-field col s6 center-align'>
+              <input
+                type='number'
+                placeholder='Please enter ingredients'
+                className='validate'
+                name='amount'
+                value={ingredients.amount}
+                onChange={onChange}
+              />
+              <label htmlFor='amount'>Amount</label>
+            </div>
+          </div>
+        </div>
+        <a class='btn-floating btn-large waves-effect waves-light red'>
+          <i className='fas fa-plus'></i>
+        </a> */}
