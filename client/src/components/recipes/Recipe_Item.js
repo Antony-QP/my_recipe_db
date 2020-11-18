@@ -6,11 +6,11 @@ export const RecipeItem = ({ recipe }) => {
 
 const recipeContext = useContext(RecipeContext)
 
-  const { id, img, title, ingredients, method, serves, time } = recipe;
+  const { _id, img, title, ingredients, method, serves, time } = recipe;
   const { deleteRecipe, setCurrent, clearCurrent } = recipeContext
 
   const onDelete = () => {
-    deleteRecipe(id);
+    deleteRecipe(_id);
     clearCurrent();
   }
 
@@ -33,7 +33,7 @@ const recipeContext = useContext(RecipeContext)
             <p>Time (hrs) : {time}</p>
             <ul>
               {ingredients.map((ingredient) => (
-                <li>{ingredient.name + " : " + ingredient.amount}</li>
+                <li key={ingredient.id}>{ingredient.name + " : " + ingredient.amount}</li>
               ))}
             </ul>
               <p>{method}</p>

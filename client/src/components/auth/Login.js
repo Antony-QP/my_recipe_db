@@ -1,44 +1,92 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from "react";
+import AlertContext from "../../context/alert/alert_Context";
+import AuthContext from "../../context/auth/auth_Context";
 
-export const Login = () => {
+export const Login = (props) => {
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
 
-    const [user, setUser] = useState({
-        email: '',
-        password: '',
-    })
+  const { setAlert } = alertContext;
+  const { login, error, clearErrors, isAuthenticated } = authContext;
 
-    const { name, email, password, password2 } = user;
-
-    const onChange = e => {
-        setUser({
-            ...user,
-            [e.target.name] : e.target.value
-        })
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
     }
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-        console.log('Login submit')
+    if (error === "Invalid Credentials") {
+      setAlert(error, "danger");
+      clearErrors();
     }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
-    return (
-        <div className="row">
-            <h1>Account <span style={{ color: 'var(--orange-color)'}}>Login</span></h1>
-            <form className="col s12" onSubmit={onSubmit}>
-                <div className="row">
-                    <div className="input-field col s12">
-                        <input type="email" className="validate" placeholder="Enter email" name="email" value={email} onChange={onChange}/>
-                        <label htmlFor="email">Email</label>
-                    </div>
-                    <div className="input-field col s12">
-                        <input type="password" className="validate" name="password" value={password} onChange={onChange} placeholder="Enter password"/>
-                        <label htmlFor="password">Password</label>
-                    </div>
-                </div>
-                <a type="submit"class="waves-effect waves-light btn black" value="login">Login</a>
-            </form>
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = user;
+
+  const onChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (email === "" || password === "") {
+      setAlert("Please fill in all fields", "danger");
+    } else {
+      console.log("logging in");
+      login({
+        email,
+        password,
+      });
+    }
+  };
+
+  return (
+    <div className='row'>
+      <h1>
+        Account <span style={{ color: "var(--orange-color)" }}>Login</span>
+      </h1>
+      <form className='col s12' onSubmit={onSubmit}>
+        <div className='row'>
+          <div className='input-field col s12'>
+            <input
+              type='email'
+              className='validate'
+              placeholder='Enter email'
+              name='email'
+              value={email}
+              onChange={onChange}
+            />
+            <label htmlFor='email'>Email</label>
+          </div>
+          <div className='input-field col s12'>
+            <input
+              type='password'
+              className='validate'
+              name='password'
+              value={password}
+              onChange={onChange}
+              placeholder='Enter password'
+            />
+            <label htmlFor='password'>Password</label>
+          </div>
         </div>
-    )
-}
+        <button
+          class='btn waves-effect waves-light black'
+          type='submit'
+          name='action'>
+          Login
+          <i class='material-icons right'></i>
+        </button>
+      </form>
+    </div>
+  );
+};
 
-export default Login
+export default Login;

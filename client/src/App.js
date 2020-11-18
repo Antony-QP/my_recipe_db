@@ -9,8 +9,14 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import AlertState from "./context/alert/Alert_State";
 import Alerts from "./components/layout/Alerts"
+import setAuthToken from './utils/setAuthToken'
+import PrivateRoute from './components/routing/Private_Route'
 import "materialize-css";
 import "./App.css";
+
+if(localStorage.token){
+  setAuthToken(localStorage.token)
+}
 
 const App = () => {
   return (
@@ -24,7 +30,7 @@ const App = () => {
                 <main>
                   <Alerts/>
                   <Switch>
-                    <Route exact path='/' component={Home} />
+                    <PrivateRoute exact path='/' component={Home} />
                     <Route exact path='/about' component={About} />
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/login' component={Login} />

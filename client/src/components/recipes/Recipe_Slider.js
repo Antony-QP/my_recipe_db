@@ -1,13 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Slider from "react-slick";
 import RecipeContext from "../../context/recipe/recipeContext";
 import RecipeItem from "../recipes/Recipe_Item";
+import Spinner from '../layout/Spinner'
 
 export default function RecipeSlider() {
   const recipeContext = useContext(RecipeContext);
 
-  const { recipes, filtered } = recipeContext;
+  const { recipes, filtered, getRecipes, loading } = recipeContext;
+
+  useEffect(() => {
+    getRecipes();
+    // eslint-disable-next-line
+  }, [])
 
   if (recipes.length === 0) {
     return <h4>Please add a recipe</h4>;
@@ -25,13 +31,13 @@ export default function RecipeSlider() {
     <Slider {...settings}>
         {filtered !== null
           ? filtered.map((recipe) => (
-              <CSSTransition key={recipe.id} timeout={500} classNames='my-node'>
-                <RecipeItem recipe={recipe} />
+              <CSSTransition key={recipe._id} timeout={500} classNames='my-node'>
+                <RecipeItem recipe={recipe} key={recipe._id} />
               </CSSTransition>
             ))
           : recipes.map((recipe) => (
-              <CSSTransition key={recipe.id} timeout={500} classNames='my-node'>
-                <RecipeItem key={recipe.id} recipe={recipe} />
+              <CSSTransition key={recipe._id} timeout={500} classNames='my-node'>
+                <RecipeItem key={recipe._id} recipe={recipe} />
               </CSSTransition>
             ))}
     </Slider>
