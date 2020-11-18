@@ -25,6 +25,7 @@ export default function RecipeSlider() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    draggable: true
   };
   return (
     <TransitionGroup>

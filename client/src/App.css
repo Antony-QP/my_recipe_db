@@ -21,6 +21,11 @@ nav {
   color: var(--light-white);
 }
 
+.filter::placeholder,
+.filter{
+  color: var(--light-white)
+}
+
 
 /* Slider */
 
@@ -59,3 +64,4 @@ nav {
   background: var(--danger-color);
   color: #fff;
 }
+

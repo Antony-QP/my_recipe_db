@@ -16,7 +16,7 @@ const recipeContext = useContext(RecipeContext)
 
   return (
     <div className='row'>
-      <div className='col s12 m7'>
+      <div className='col s6 offset-s3'>
         <div className='card'>
           <div class='card-image'>
             <img className='activator' src={img}></img>

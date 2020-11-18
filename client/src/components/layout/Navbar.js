@@ -1,6 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import AuthContext from "../../context/auth/auth_Context";
 import RecipeContext from '../../context/recipe/recipeContext'
+import RecipeFilter from '../recipes/Recipe_Filter'
 import PropTypes from "prop-types";
 import { Link, Redirect } from "react-router-dom";
 import m from "materialize-css";
@@ -28,6 +29,9 @@ export const Navbar = () => {
           </a>
         </li>
       </ul>
+      <ul className='left hide-on-med-and-down '>
+      <li><RecipeFilter/></li>
+      </ul>
     </Fragment>
   );
 
@@ -51,6 +55,7 @@ export const Navbar = () => {
   return (
     <nav>
       <div className='nav-wrapper'>
+      {/* <RecipeFilter/> */}
         <a href='#' className='brand-logo center'>
           My Recipe<strong style={{ color: "var(--orange-color)" }}> DB</strong>
           .

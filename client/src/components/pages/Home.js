@@ -18,7 +18,6 @@ export const Home = () => {
 
   return (
     <div className='container'>
-        <h1>My Recipes</h1>
         <Recipe_Filter/>
         <RecipeSlider/>
         <br></br>
