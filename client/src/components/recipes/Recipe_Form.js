@@ -1,17 +1,34 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import RecipeContext from "../../context/recipe/recipeContext";
 import RecipeItem from "./Recipe_Item";
 import immer, { produce } from "immer";
-import { v4 as uuidv4 } from 'uuid';
-import shortid, {generate} from 'shortid'
+import { v4 as uuidv4 } from "uuid";
+import shortid, { generate } from "shortid";
 
 export const Recipe_Form = () => {
   const recipeContext = useContext(RecipeContext);
 
+  const { addRecipe, current, clearCurrent, updateRecipe } = recipeContext
+
+  useEffect(() => {
+    if(current !== null){
+      setRecipe(current)
+    }else{
+      setRecipe({
+        title: "",
+        img: "",
+        ingredients: [],
+        method: "",
+        serves: "",
+        time: "",
+      });
+    }
+  }, [recipeContext, current])
+
   const [recipe, setRecipe] = useState({
     title: "",
     img: "",
-    ingredients: [{ id: "1", name: "cheese", amount: "200" }],
+    ingredients: [],
     method: "",
     serves: "",
     time: "",
@@ -22,21 +39,23 @@ export const Recipe_Form = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    recipeContext.addRecipe(recipe);
-    setRecipe({
-      title: "",
-      img: "",
-      ingredients: [],
-      method: "",
-      serves: "",
-      time: "",
-    });
+    if(current === null){
+      addRecipe(recipe);
+    }else{
+      updateRecipe(recipe)
+    }
+    clearAll()
   };
+
+  const clearAll = () => {
+    clearCurrent()
+  }
 
   const { title, img, ingredients, method, serves, time } = recipe;
 
   return (
     <div className='row center-align'>
+      <h3>{current ? 'Edit Recipe' : 'Add Recipe'}</h3>
       <form className='col s12' onSubmit={onSubmit}>
         {/* Image */}
         <div className='input-field col s12 center-align'>
@@ -59,19 +78,7 @@ export const Recipe_Form = () => {
             onChange={onChange}
           />
         </div>
-        <a onClick={() => {
-          setRecipe({
-            ...recipe,
-            ingredients: [...ingredients, {
-              id: generate(),
-              name: '',
-              amount: ''
-            }]
-          })
-        }} 
-        className='btn-floating btn-large waves-effect waves-light red'>
-          <i className='fas fa-plus'></i>
-        </a>
+
         {ingredients.map((i) => {
           return (
             <div key={i.id}>
@@ -111,14 +118,34 @@ export const Recipe_Form = () => {
                 value={i.amount}
                 placeholder='amount'
               />
-              <button onClick={() => {
-                setRecipe({
-                  ingredients: ingredients.filter(x => x.id !== i.id)
-                })
-              }}>X</button>
+              <button
+                onClick={() => {
+                  setRecipe({
+                    ingredients: ingredients.filter((x) => x.id !== i.id),
+                  });
+                }}>
+                X
+              </button>
             </div>
           );
         })}
+        <a
+          onClick={() => {
+            setRecipe({
+              ...recipe,
+              ingredients: [
+                ...ingredients,
+                {
+                  id: generate(),
+                  name: "",
+                  amount: "",
+                },
+              ],
+            });
+          }}
+          className='btn-floating btn-large waves-effect waves-light red'>
+          <i className='fas fa-plus'></i>
+        </a>
         {/* Method */}
         <div className='methodContainer'>
           <div className='row method-line'>
@@ -161,8 +188,9 @@ export const Recipe_Form = () => {
           className='btn waves-effect waves-light'
           type='submit'
           name='action'>
-          Submit
+          {current ? 'Update Recipe' : 'Add Recipe'}
         </button>
+        {current && <div><button onClick={clearAll}>Clear</button></div>}
       </form>
       {JSON.stringify(ingredients, null, 2)}
     </div>

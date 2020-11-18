@@ -5,9 +5,10 @@ import recipeReducer from './recipeReducer'
 import {
   ADD_RECIPE,
   DELETE_RECIPE,
+  SET_CURRENT,
   SET_ALERT,
   CLEAR_CURRENT,
-  UPDATE_CURRENT,
+  UPDATE_RECIPE,
   FILTER_RECIPES,
   CLEAR_FILTER
 } from '../types'
@@ -29,8 +30,9 @@ const RecipeState = props => {
             "amount": "500"
             }
         ],
-        "method" : "Fry the meat and mix it with some beans",
-        "serves" : "5"
+        "method" : "First, make the béchamel sauce. Put the milk, onion, bay leaves and cloves into a large saucepan and bring very gently just up to the boil. Turn off the heat and set aside for 1 hr to infuse. For the meat sauce, put the oil, celery, onion, carrot, garlic and pancetta in another large saucepan. Gently cook together until the veg is soft but not coloured. Tip in the beef and pork mince, the milk and chopped tomatoes. Using a wooden spoon, stir together and break up and mash the lumps of mince against the sides of the pan. When the mince is mostly broken down, stir in all the herbs, the stock cubes and the red wine, and bring to a simmer. Cover and cook for 1 hr, stirring occasionally to stop the bottom catching.",
+        "serves" : "5",
+        "time" : "1.5"
     },
     {
       "id" : "2",
@@ -47,7 +49,8 @@ const RecipeState = props => {
           }
       ],
       "method" : "Combine the meat, fry it and stick it in a bun",
-      "serves" : "5"
+      "serves" : "5",
+      "time" : "1.5"
   },
   {
     "id" : "3",
@@ -64,9 +67,12 @@ const RecipeState = props => {
         }
     ],
     "method" : "Fry the meat, stick in between some sheets",
-    "serves" : "5"
+    "serves" : "5",
+    "time" : "1.5"
 }
-    ]
+    ],
+    current: null,
+    filtered: null
   };
 
 // Allows us to access state and dispatch to the reducer 
@@ -79,22 +85,47 @@ dispatch({ type: ADD_RECIPE, payload:recipe})
 }
 
 // Delete recipe
+const deleteRecipe = id => {
+  dispatch({ type: DELETE_RECIPE, payload:id})
+  }
 
 // Set current recipe
+const setCurrent = recipe => {
+  dispatch({ type: SET_CURRENT, payload: recipe})
+  }
 
 // Clear current recipe
+const clearCurrent = () => {
+  dispatch({ type: CLEAR_CURRENT})
+  }
 
 // Update recipe
-
+const updateRecipe = recipe => {
+  dispatch({ type: UPDATE_RECIPE, payload: recipe})
+  }
 // Filter recipes
+const filterRecipes = text => {
+  dispatch({ type: FILTER_RECIPES, payload: text})
+  }
 
 // Clear filter
+const clearFilter = () => {
+  dispatch({ type: CLEAR_FILTER})
+  }
 
   return (
     <RecipeContext.Provider 
       value = {{
         recipes :state.recipes,
-        addRecipe
+        current : state.current,
+        filtered : state.filtered,
+        addRecipe,
+        deleteRecipe,
+        setCurrent,
+        clearCurrent,
+        updateRecipe,
+        filterRecipes,
+        clearFilter
       }}
     >
     {props.children}

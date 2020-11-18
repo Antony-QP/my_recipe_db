@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext} from "react";
 import PropTypes from "prop-types";
+import RecipeContext from '../../context/recipe/recipeContext'
 
 export const RecipeItem = ({ recipe }) => {
-  const { img, title, ingredients, method, serves } = recipe;
+
+const recipeContext = useContext(RecipeContext)
+
+  const { id, img, title, ingredients, method, serves, time } = recipe;
+  const { deleteRecipe, setCurrent, clearCurrent } = recipeContext
+
+  const onDelete = () => {
+    deleteRecipe(id);
+    clearCurrent();
+  }
 
   return (
     <div className='row'>
@@ -20,6 +30,7 @@ export const RecipeItem = ({ recipe }) => {
               <i class=' far fa-window-close right'></i>
             </span>
             <p>Serves : {serves}</p>
+            <p>Time (hrs) : {time}</p>
             <ul>
               {ingredients.map((ingredient) => (
                 <li>{ingredient.name + " : " + ingredient.amount}</li>
@@ -28,7 +39,8 @@ export const RecipeItem = ({ recipe }) => {
               <p>{method}</p>
           </div>
           <div className='card-action'>
-            <a href='#'>This is a link</a>
+          <a class="waves-effect waves-light btn-small green" onClick={() => setCurrent(recipe)}>Edit</a>
+          <a class="waves-effect waves-light btn-small red" onClick={onDelete}>Delete</a>
           </div>
         </div>
       </div>

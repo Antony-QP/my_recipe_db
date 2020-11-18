@@ -4,6 +4,7 @@
   --light-white: #f5f5f5;
   --light-grey: #dfe2e0;
   --darker-grey: #b3bdba;
+  --danger-color: #dc3545;
 }
 
 /* Navbar */
@@ -16,9 +17,44 @@ nav {
   background-color: var(--black);
 }
 
+.link{
+  color: var(--light-white);
+}
+
 /* Slider */
 
 .carousel-img{
   width:200px;
   height: 200px;
+}
+
+/* Recipe_Item */
+
+.btn-small{
+  margin-right: 5px;
+}
+
+/* React transitions */
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms;
+}
+
+
+.alert {
+  padding: 0.7rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+  background: var(--danger-color);
+  color: #fff;
 }
