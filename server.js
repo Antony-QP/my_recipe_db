@@ -5,7 +5,7 @@ const connectDB = require('./config/db')
 const app = express()
 
 // Init middleware
-app.use(express.json({ extended : false }))
+app.use(express.json({ extended : false , limit : '50mb'}))
 
 // Connect database
 connectDB();
@@ -13,6 +13,7 @@ connectDB();
 app.get('/', (req, res) => res.json({ msg : "Welcome to My Recipe DB"}))
 
 // Define Routes
+app.use('/api/upload', require('./routes/upload'))
 app.use('/api/users', require('./routes/users'))
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/recipes', require('./routes/recipes'))

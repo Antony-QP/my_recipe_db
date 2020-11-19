@@ -1,19 +1,27 @@
 import React, { useState, useContext, useEffect } from "react";
 import RecipeContext from "../../context/recipe/recipeContext";
+import AuthContext from "../../context/auth/auth_Context";
 import RecipeItem from "./Recipe_Item";
 import immer, { produce } from "immer";
 import { v4 as uuidv4 } from "uuid";
 import shortid, { generate } from "shortid";
 
 export const Recipe_Form = () => {
-  const recipeContext = useContext(RecipeContext);
-
-  const { addRecipe, current, clearCurrent, updateRecipe } = recipeContext
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    if(current !== null){
-      setRecipe(current)
-    }else{
+    authContext.loadUser();
+    // eslint-disable-next-line
+  }, []);
+
+  const recipeContext = useContext(RecipeContext);
+
+  const { addRecipe, current, clearCurrent, updateRecipe } = recipeContext;
+
+  useEffect(() => {
+    if (current !== null) {
+      setRecipe(current);
+    } else {
       setRecipe({
         title: "",
         img: "",
@@ -23,7 +31,7 @@ export const Recipe_Form = () => {
         time: "",
       });
     }
-  }, [recipeContext, current])
+  }, [recipeContext, current]);
 
   const [recipe, setRecipe] = useState({
     title: "",
@@ -34,40 +42,99 @@ export const Recipe_Form = () => {
     time: "",
   });
 
+  const [fileInputState, setFileInputState] = useState("");
+  const [previewSource, setPreviewSource] = useState("");
+  const [selectedFile, setSelectedFile] = useState("");
+
+  // Image upload
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+
+  const handleSubmitFile = (e) => {
+    e.preventDefault();
+    if (!previewSource) return;
+    uploadImage(previewSource);
+  };
+
+  const uploadImage = async (base64EncodedImage) => {
+    try {
+        await fetch("/api/upload", {
+        method: "POST",
+        body: JSON.stringify({ data: base64EncodedImage }),
+        headers: { "Content-type": "application/json" },
+      })
+      
+
+    } catch (error) {
+      console.log(error.type);
+    }
+  };
+
   const onChange = (e) =>
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if(current === null){
+    if (current === null) {
       addRecipe(recipe);
-    }else{
-      updateRecipe(recipe)
+    } else {
+      updateRecipe(recipe);
     }
-    clearAll()
+    clearAll();
   };
 
   const clearAll = () => {
-    clearCurrent()
-  }
+    clearCurrent();
+  };
 
   const { title, img, ingredients, method, serves, time } = recipe;
 
   return (
     <div className='row center-align'>
-      <h3>{current ? 'Edit Recipe' : 'Add Recipe'}</h3>
-      <form className='col s12' onSubmit={onSubmit}>
+      <h3>{current ? "Edit Recipe" : "Add Recipe"}</h3>
+      <form onSubmit={handleSubmitFile}>
         {/* Image */}
+        <h6>Image</h6>
         <div className='input-field col s12 center-align'>
           <input
+            type='file'
+            name='img'
+            value={img}
+            onChange={handleFileInputChange}></input>
+          {/* <input
             type='text'
             placeholder='Please enter an image url'
             name='img'
             value={img}
             onChange={onChange}
-          />
+          /> */}
         </div>
-        {/* Title */}
+        {previewSource && (
+          <img
+            src={previewSource}
+            style={{ width: "300px", height: "300px" }}></img>
+        )}
+        {previewSource && (
+          <button
+            className='btn waves-effect waves-light secondary'
+            type='submit'
+            name='action'>
+            Upload Image
+          </button>
+        )}
+      </form>
+      {/* Title */}
+      <form className='col s12' onSubmit={onSubmit}>
         <div className='input-field col s12 center-align'>
           <input
             type='text'
@@ -78,7 +145,7 @@ export const Recipe_Form = () => {
             onChange={onChange}
           />
         </div>
-
+        <h6>Ingredients</h6>
         {ingredients.map((i) => {
           return (
             <div key={i.id}>
@@ -143,7 +210,7 @@ export const Recipe_Form = () => {
               ],
             });
           }}
-          className='btn-floating btn-large waves-effect waves-light red'>
+          className='btn-floating btn-large waves-effect waves-light primary'>
           <i className='fas fa-plus'></i>
         </a>
         {/* Method */}
@@ -185,14 +252,19 @@ export const Recipe_Form = () => {
         </div>
         <br></br>
         <button
-          className='btn waves-effect waves-light'
+          className='btn waves-effect waves-light secondary'
           type='submit'
           name='action'>
-          {current ? 'Update Recipe' : 'Add Recipe'}
+          {current ? "Update Recipe" : "Add Recipe"}
         </button>
-        {current && <div><button onClick={clearAll}>Clear</button></div>}
+        {current && (
+          <div>
+            <button onClick={clearAll}>Clear</button>
+          </div>
+        )}
       </form>
       {JSON.stringify(ingredients, null, 2)}
+      {JSON.stringify(img)}
     </div>
   );
 };

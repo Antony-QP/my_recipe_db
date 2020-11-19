@@ -1,13 +1,21 @@
-import React, { useContext, Fragment } from "react";
+import React, { useContext, Fragment, useEffect } from "react";
 import AuthContext from "../../context/auth/auth_Context";
 import RecipeContext from '../../context/recipe/recipeContext'
 import RecipeFilter from '../recipes/Recipe_Filter'
 import PropTypes from "prop-types";
 import { Link, Redirect } from "react-router-dom";
-import m from "materialize-css";
+import M from "materialize-css";
 import { CLEAR_RECIPES } from "../../context/types";
+import $ from 'jquery'
+
 
 export const Navbar = () => {
+
+  useEffect(() => {
+    let elems = document.querySelectorAll('.dropdown-trigger');
+    M.Dropdown.init(elems, {inDuration: 300, outDuration: 225});
+  })
+
   const authContext = useContext(AuthContext);
   const recipeContext = useContext(RecipeContext)
 
@@ -21,16 +29,16 @@ export const Navbar = () => {
 
   const authLinks = (
     <Fragment>
-      <ul className='right hide-on-med-and-down'>
+    <li><a className="right dropdown-trigger" href="#!" data-target="dropdown1"><i className="fas fa-bars"></i></a></li>
+      <ul className='right dropdown-content' id="dropdown1">
         <li>Hello, {user && user.name}</li>
         <li>
           <a href='#!' onClick={onLogout}>
-            <i className='fas fa-sign-out-alt'></i>
+            Sign Out
           </a>
         </li>
       </ul>
       <ul className='left hide-on-med-and-down '>
-      <li><RecipeFilter/></li>
       </ul>
     </Fragment>
   );

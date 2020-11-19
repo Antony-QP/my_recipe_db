@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth')
+const { cloudinary } = require ('../backendUtils/cloudinary')
 const User = require('../models/User')
 const Recipe = require('../models/Recipe')
 
@@ -33,6 +34,7 @@ router.post('/', [auth, [
   const { img, title, ingredients, method, serves } = req.body
 
   try {
+        
     const newRecipe = new Recipe({
       img : img,
       title : title,

@@ -24,7 +24,7 @@ export const Recipe_Filter = () => {
 
     return (
         <form>
-            <input ref={text} placeholder="Search recipes" onChange={onChange} className='filter'/>
+            <input ref={text} placeholder="Search" onChange={onChange} className='filter' type='text'/>
         </form>
     )
 }

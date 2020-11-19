@@ -11,6 +11,7 @@ import AlertState from "./context/alert/Alert_State";
 import Alerts from "./components/layout/Alerts"
 import setAuthToken from './utils/setAuthToken'
 import PrivateRoute from './components/routing/Private_Route'
+import RecipeForm from './components/recipes/Recipe_Form'
 import "materialize-css";
 import "./App.css";
 
@@ -34,6 +35,7 @@ const App = () => {
                     <Route exact path='/about' component={About} />
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/login' component={Login} />
+                    <PrivateRoute exact path='/add' component={RecipeForm} />
                   </Switch>
                 </main>
               </Fragment>

@@ -21,8 +21,9 @@ export const Home = () => {
         <Recipe_Filter/>
         <RecipeSlider/>
         <br></br>
-        <RecipeForm/>
+        <br></br>
     </div>
+    
   )
 }
 
