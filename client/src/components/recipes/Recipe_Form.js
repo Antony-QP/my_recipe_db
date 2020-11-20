@@ -66,17 +66,37 @@ export const Recipe_Form = () => {
     uploadImage(previewSource);
   };
 
-  const uploadImage = async (base64EncodedImage) => {
+  // const getImage = async () => {
+  //   try{
+  //     await fetch()
+  //   }catch(err){
+
+  //   }
+  // }
+
+  const uploadImage = (base64EncodedImage) => {
+
     try {
-        await fetch("/api/upload", {
+        fetch("http://localhost:4000/api/upload", {
         method: "POST",
         body: JSON.stringify({ data: base64EncodedImage }),
         headers: { "Content-type": "application/json" },
-      })
-      
+        // mode: 'no-cors'
+      }).then((res) => res.json())
+        .then((data) => {
+          return data.url
+        }).then((url) => {
+          setRecipe({
+            ...recipe,
+            img: url
+          })
+        })
+
+        
+        
 
     } catch (error) {
-      console.log(error.type);
+      console.log(error);
     }
   };
 

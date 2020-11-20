@@ -6,6 +6,7 @@ const app = express()
 
 // Init middleware
 app.use(express.json({ extended : false , limit : '50mb'}))
+app.use(express.urlencoded({ limit : '50mb', extended: "true"}))
 
 // Connect database
 connectDB();
