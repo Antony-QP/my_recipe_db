@@ -64,10 +64,10 @@ export const Navbar = () => {
     <nav>
       <div className='nav-wrapper'>
       {/* <RecipeFilter/> */}
-        <a href='#' className='brand-logo center'>
+        <Link to='/' className='brand-logo center'>
           My Recipe<strong style={{ color: "var(--orange-color)" }}> DB</strong>
           .
-        </a>
+        </Link>
         <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
       </div>
     </nav>

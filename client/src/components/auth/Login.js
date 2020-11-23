@@ -63,7 +63,6 @@ export const Login = (props) => {
               value={email}
               onChange={onChange}
             />
-            <label htmlFor='email'>Email</label>
           </div>
           <div className='input-field col s12'>
             <input
@@ -74,7 +73,6 @@ export const Login = (props) => {
               onChange={onChange}
               placeholder='Enter password'
             />
-            <label htmlFor='password'>Password</label>
           </div>
         </div>
         <button

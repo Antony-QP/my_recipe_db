@@ -3,17 +3,17 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Slider from "react-slick";
 import RecipeContext from "../../context/recipe/recipeContext";
 import RecipeItem from "../recipes/Recipe_Item";
-import Spinner from '../layout/Spinner'
+import Spinner from "../layout/Spinner";
 
 export default function RecipeSlider() {
   const recipeContext = useContext(RecipeContext);
 
-  const { recipes, filtered, getRecipes, loading } = recipeContext;
+  const { recipes, filtered, getRecipes, loading, current } = recipeContext;
 
   useEffect(() => {
     getRecipes();
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   if (recipes.length === 0) {
     return <h4>Please add a recipe</h4>;
@@ -25,23 +25,29 @@ export default function RecipeSlider() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    draggable: true
+    draggable: true,
   };
   return (
     <TransitionGroup>
-    <Slider {...settings}>
+      <Slider {...settings}>
         {filtered !== null
           ? filtered.map((recipe) => (
-              <CSSTransition key={recipe._id} timeout={500} classNames='my-node'>
+              <CSSTransition
+                key={recipe._id}
+                timeout={500}
+                classNames='my-node'>
                 <RecipeItem recipe={recipe} key={recipe._id} />
               </CSSTransition>
             ))
           : recipes.map((recipe) => (
-              <CSSTransition key={recipe._id} timeout={500} classNames='my-node'>
+              <CSSTransition
+                key={recipe._id}
+                timeout={500}
+                classNames='my-node'>
                 <RecipeItem key={recipe._id} recipe={recipe} />
               </CSSTransition>
             ))}
-    </Slider>
+      </Slider>
     </TransitionGroup>
   );
 }

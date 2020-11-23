@@ -39,8 +39,8 @@ const recipeContext = useContext(RecipeContext)
               <p>{method}</p>
           </div>
           <div className='card-action'>
-          <a class="waves-effect waves-light btn-small green" onClick={() => setCurrent(recipe)}>Edit</a>
-          <a class="waves-effect waves-light btn-small red" onClick={onDelete}>Delete</a>
+          <a class="waves-effect waves-light btn-small primary" onClick={() => setCurrent(recipe)}>Edit</a>
+          <a class="waves-effect waves-light btn-small secondary" onClick={onDelete}>Delete</a>
           </div>
         </div>
       </div>

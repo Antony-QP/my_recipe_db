@@ -7,6 +7,9 @@
   --danger-color: #dc3545;
 }
 
+body{
+  overflow: scroll;
+}
 /* Navbar */
 
 .brand-logo {
@@ -19,24 +22,6 @@ nav {
 
 .link{
   color: var(--light-white);
-}
-
-.filter::placeholder{
-  text-align: center
-}
-
-.filter{
-  text-align:center
-}
-
-
-input[type=text]:focus {
-  border-bottom: 1px solid var(--orange-color)!important;
-  box-shadow: 0 1px 0 0 var(--orange-color)!important;
-}
-
-input::placeholder{
-  text-align: center;
 }
 
 
@@ -78,6 +63,30 @@ input::placeholder{
   color: #fff;
 }
 
+/* Form */
+
+.filter::placeholder{
+  text-align: center
+}
+
+.filter{
+  text-align:center
+}
+
+
+input[type=text]:focus,
+input[type=number]:focus,
+input[type=email]:focus,
+input[type=password]:focus {
+  border-bottom: 1px solid var(--orange-color)!important;
+  box-shadow: 0 1px 0 0 var(--orange-color)!important;
+}
+
+
+input::placeholder{
+  text-align: center;
+}
+
 /* Utils */
 
 .primary{
@@ -86,4 +95,19 @@ input::placeholder{
 
 .secondary{
   background-color: var(--black);
+}
+
+.text-center{
+  text-align:center!important
+}
+
+.text-1{
+  color:var(--light-white)!important;
+}
+
+.btn:hover:hover,
+.btn-small:hover,
+.btn-large:hover{
+  background-color:var(--orange-color)!important;
+  opacity:0.6!important;
 }
