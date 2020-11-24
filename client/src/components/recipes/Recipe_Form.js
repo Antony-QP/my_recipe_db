@@ -10,10 +10,10 @@ import shortid, { generate } from "shortid";
 export const Recipe_Form = () => {
   const history = useHistory();
 
-  const goToHomePage = () => {
-    let path = "/";
-    history.push(path);
-  };
+  // const goToHomePage = () => {
+  //   let path = "/";
+  //   history.push(path);
+  // };
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
@@ -116,174 +116,172 @@ export const Recipe_Form = () => {
   const { title, img, ingredients, method, serves, time } = recipe;
 
   return (
-    <div id="ingredContainer">
-    <div className='row center-align'>
-    <h3>{current ? "Edit Recipe" : "Add Recipe"}</h3>
-    <form onSubmit={handleSubmitFile}>
-      {/* Image */}
-      <div className='input-field col s12 center-align text-center'>
-        <input
-          id='img'
-          className='center'
-          type='file'
-          name='img'
-          onChange={handleFileInputChange}></input>
-      </div>
-      {previewSource && (
-        <img
-          src={previewSource}
-          style={{
-            width: "300px",
-            height: "300px",
-            borderRadius: "5px",
-          }}></img>
-      )}
-      {previewSource && (
-        <div className='input-field col s12 center-align'>
+    <div id='ingredContainer'>
+      <div className='row center-align'>
+        <h3>{current ? "Edit Recipe" : "Add Recipe"}</h3>
+        {!current && (
+          <form onSubmit={handleSubmitFile}>
+            {/* Image */}
+
+            <div className='input-field col s12 center-align text-center'>
+              <input
+                id='img'
+                className='center'
+                type='file'
+                name='img'
+                onChange={handleFileInputChange}></input>
+            </div>
+            {previewSource && (
+              <img
+                src={previewSource}
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  borderRadius: "5px",
+                }}></img>
+            )}
+            {previewSource && (
+              <div className='input-field col s12 center-align'>
+                <button
+                  className='btn waves-effect waves-light secondary'
+                  type='submit'
+                  name='action'>
+                  Upload Image
+                </button>
+              </div>
+            )}
+          </form>
+        )}
+        {/* Title */}
+        <form className='col s12' id='ingredForm' onSubmit={onSubmit}>
+          <div className='input-field col s12 center-align'>
+            <input
+              type='text'
+              placeholder='Please enter recipe title'
+              className='validate'
+              name='title'
+              value={title}
+              onChange={onChange}
+            />
+          </div>
+          {ingredients.map((i) => {
+            return (
+              <div key={i.id} className='input-field col s12 center-align'>
+                <input
+                  onChange={(e) => {
+                    const name = e.target.value;
+                    setRecipe({
+                      ...recipe,
+                      ingredients: recipe.ingredients.map((x) =>
+                        x.id === i.id
+                          ? {
+                              ...x,
+                              name,
+                            }
+                          : x
+                      ),
+                    });
+                  }}
+                  value={i.name}
+                  placeholder='ingredient'
+                />
+                <input
+                  onChange={(e) => {
+                    const amount = e.target.value;
+                    setRecipe({
+                      ...recipe,
+                      ingredients: recipe.ingredients.map((x) =>
+                        x.id === i.id
+                          ? {
+                              ...x,
+                              amount,
+                            }
+                          : x
+                      ),
+                    });
+                  }}
+                  value={i.amount}
+                  placeholder='amount'
+                />
+                <button
+                  className='btn waves-effect waves-light primary text-1'
+                  onClick={() => {
+                    setRecipe({
+                      ingredients: ingredients.filter((x) => x.id !== i.id),
+                    });
+                  }}>
+                  X
+                </button>
+              </div>
+            );
+          })}
+          <a
+            onClick={() => {
+              setRecipe({
+                ...recipe,
+                ingredients: [
+                  ...ingredients,
+                  {
+                    id: generate(),
+                    name: "",
+                    amount: "",
+                  },
+                ],
+              });
+            }}
+            className='btn waves-effect waves-light secondary'>
+            Add Ingredient
+          </a>
+          {/* Method */}
+              <div className='input-field col s12 center-align text-center'>
+                <input
+                  type='text'
+                  placeholder='Please enter method'
+                  className='validate'
+                  name='method'
+                  value={method}
+                  onChange={onChange}
+                />
+              </div>
+          {/* Serves */}
+          <div className='input-field col s12 center-align'>
+            <input
+              type='number'
+              placeholder='Number of servings'
+              className='validate'
+              name='serves'
+              value={serves}
+              onChange={onChange}
+            />
+          </div>
+          {/* Time */}
+          <div className='input-field col s12 center-align'>
+            <input
+              type='text'
+              placeholder='Time to compelete...'
+              className='validate'
+              name='time'
+              value={time}
+              onChange={onChange}
+            />
+          </div>
+          <br></br>
           <button
             className='btn waves-effect waves-light secondary'
             type='submit'
             name='action'>
-            Upload Image
+            {current ? "Update Recipe" : "Add Recipe"}
           </button>
-        </div>
-      )}
-    </form>
-    {/* Title */}
-    <form className='col s12' id="ingredForm" onSubmit={onSubmit}>
-      <div className='input-field col s12 center-align'>
-        <input
-          type='text'
-          placeholder='Please enter recipe title'
-          className='validate'
-          name='title'
-          value={title}
-          onChange={onChange}
-        />
+          {current && (
+            <div>
+              <button className="btn waves-effect waves light grey lighten-1"onClick={clearAll} style={{ marginTop : "5px"}}>Clear</button>
+            </div>
+          )}
+        </form>
+        {/* {JSON.stringify(ingredients, null, 2)}
+        {JSON.stringify(img)} */}
       </div>
-      {ingredients.map((i) => {
-        return (
-          <div key={i.id}>
-            <input
-              onChange={(e) => {
-                const name = e.target.value;
-                setRecipe({
-                  ...recipe,
-                  ingredients: recipe.ingredients.map((x) =>
-                    x.id === i.id
-                      ? {
-                          ...x,
-                          name,
-                        }
-                      : x
-                  ),
-                });
-              }}
-              value={i.name}
-              placeholder='ingredient'
-            />
-            <input
-              onChange={(e) => {
-                const amount = e.target.value;
-                setRecipe({
-                  ...recipe,
-                  ingredients: recipe.ingredients.map((x) =>
-                    x.id === i.id
-                      ? {
-                          ...x,
-                          amount,
-                        }
-                      : x
-                  ),
-                });
-              }}
-              value={i.amount}
-              placeholder='amount'
-            />
-            <button
-              className = 'btn waves-effect waves-light secondary text-1'
-              onClick={() => {
-                setRecipe({
-                  ingredients: ingredients.filter((x) => x.id !== i.id),
-                });
-              }}>
-              X
-            </button>
-          </div>
-        );
-      })}
-      <a
-        onClick={() => {
-          setRecipe({
-            ...recipe,
-            ingredients: [
-              ...ingredients,
-              {
-                id: generate(),
-                name: "",
-                amount: "",
-              },
-            ],
-          });
-        }}
-        className='btn waves-effect waves-light primary'>
-        Add Ingredient
-      </a>
-      {/* Method */}
-      <div className='methodContainer'>
-        <div className='row method-line'>
-          <div className='input-field col s12 center-align'>
-            <input
-              type='text'
-              placeholder='Please enter method'
-              className='validate'
-              name='method'
-              value={method}
-              onChange={onChange}
-            />
-          </div>
-        </div>
-      </div>
-      {/* Serves */}
-      <div className='input-field col s12 center-align'>
-        <input
-          type='number'
-          placeholder='Number of servings'
-          className='validate'
-          name='serves'
-          value={serves}
-          onChange={onChange}
-        />
-      </div>
-      {/* Time */}
-      <div className='input-field col s12 center-align'>
-        <input
-          type='text'
-          placeholder='Time to compelete...'
-          className='validate'
-          name='time'
-          value={time}
-          onChange={onChange}
-        />
-      </div>
-      <br></br>
-      <button
-        className='btn waves-effect waves-light secondary'
-        type='submit'
-        name='action'
-        onClick={goToHomePage}>
-        {current ? "Update Recipe" : "Add Recipe"}
-      </button>
-      {current && (
-        <div>
-          <button onClick={clearAll}>Clear</button>
-        </div>
-      )}
-    </form>
-    {JSON.stringify(ingredients, null, 2)}
-    {JSON.stringify(img)}
-  </div>
-  </div>
+    </div>
   );
 };
 

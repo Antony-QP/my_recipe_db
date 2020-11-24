@@ -12,6 +12,7 @@ import Alerts from "./components/layout/Alerts"
 import setAuthToken from './utils/setAuthToken'
 import PrivateRoute from './components/routing/Private_Route'
 import RecipeForm from './components/recipes/Recipe_Form'
+import Footer from './components/layout/Footer'
 import "materialize-css";
 import "./App.css";
 
@@ -39,6 +40,7 @@ const App = () => {
                   </Switch>
                 </main>
               </Fragment>
+              <Footer/>
             </body>
           </Router>
         </AlertState>

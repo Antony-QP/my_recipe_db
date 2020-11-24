@@ -11,9 +11,9 @@ import { Link, Redirect } from "react-router-dom";
 
 export const Home = () => {
   const authContext = useContext(AuthContext);
-  const recipeContext = useContext(RecipeContext)
+  const recipeContext = useContext(RecipeContext);
 
-  const { current } = recipeContext
+  const { current } = recipeContext;
 
   useEffect(() => {
     authContext.loadUser();
@@ -22,17 +22,25 @@ export const Home = () => {
 
   return (
     <div className='container'>
-      { !current && <Recipe_Filter />}
-      <RecipeSlider/>
-      <Fragment>
-      <br></br>
-      <br></br>
-      <div className="center">
-        <Link class='btn-floating btn-large waves-effect waves-light secondary link' to="/add">
-          <i className='fas fa-plus'></i>
-        </Link>
-      </div>
-      </Fragment>
+      {current ? (
+        <RecipeForm />
+      ) : (
+        <Fragment>
+          <Recipe_Filter />
+          <RecipeSlider />
+          <Fragment>
+            <br></br>
+            <br></br>
+            <div className='center'>
+              <Link
+                class='btn-floating btn-large waves-effect waves-light secondary link'
+                to='/add'>
+                <i className='fas fa-plus'></i>
+              </Link>
+            </div>
+          </Fragment>
+        </Fragment>
+      )}
     </div>
   );
 };

@@ -31,9 +31,11 @@ export const Navbar = () => {
     <Fragment>
     <li><a className="right dropdown-trigger" href="#!" data-target="dropdown1"><i className="fas fa-bars"></i></a></li>
       <ul className='right dropdown-content' id="dropdown1">
-        <li>Hello, {user && user.name}</li>
         <li>
-          <a href='#!' onClick={onLogout}>
+          <p className="center">Hello, {user && user.name}</p>
+        </li>
+        <li>
+          <a href='/login' onClick={onLogout} className='text-2'>
             Sign Out
           </a>
         </li>

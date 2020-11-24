@@ -48,6 +48,7 @@ export const Login = (props) => {
   };
 
   return (
+    <div className="container">
     <div className='row'>
       <h1>
         Account <span style={{ color: "var(--orange-color)" }}>Login</span>
@@ -76,13 +77,14 @@ export const Login = (props) => {
           </div>
         </div>
         <button
-          class='btn waves-effect waves-light black'
+          class='btn waves-effect waves-light black align-center'
           type='submit'
           name='action'>
           Login
           <i class='material-icons right'></i>
         </button>
       </form>
+    </div>
     </div>
   );
 };

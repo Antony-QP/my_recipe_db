@@ -87,6 +87,12 @@ input::placeholder{
   text-align: center;
 }
 
+input[type=email]::placeholder,
+input[type=password]::placeholder
+{
+  text-align: left!important;
+}
+
 /* Utils */
 
 .primary{
@@ -105,9 +111,24 @@ input::placeholder{
   color:var(--light-white)!important;
 }
 
+.text-2{
+  color: var(--orange-color)!important;
+}
+
 .btn:hover:hover,
 .btn-small:hover,
 .btn-large:hover{
   background-color:var(--orange-color)!important;
   opacity:0.6!important;
 }
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+    
