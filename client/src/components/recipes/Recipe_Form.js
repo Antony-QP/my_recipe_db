@@ -116,7 +116,7 @@ export const Recipe_Form = () => {
   const { title, img, ingredients, method, serves, time } = recipe;
 
   return (
-    <div id='ingredContainer'>
+    <div id='ingred-container'>
       <div className='row center-align'>
         <h3>{current ? "Edit Recipe" : "Add Recipe"}</h3>
         {!current && (

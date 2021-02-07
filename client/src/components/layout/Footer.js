@@ -5,7 +5,7 @@ export const Footer = () => {
     <div>
       <footer class='page-footer black'>
           <div class='container black'>
-            © 2020 Copyright My Recipe DB.
+            © 2021 Copyright My Recipe DB.
           </div>
       </footer>
     </div>

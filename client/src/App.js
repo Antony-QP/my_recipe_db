@@ -29,7 +29,7 @@ const App = () => {
             <body>
               <Fragment>
                 <Navbar />
-                <main>
+                <main className="background-image">
                   <Alerts/>
                   <Switch>
                     <PrivateRoute exact path='/' component={Home} />
