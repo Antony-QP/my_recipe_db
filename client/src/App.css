@@ -130,7 +130,7 @@ body {
 
 main {
   flex: 1 0 auto;
-  background-image: url("https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8Y3V0dGluZyUyMGJvYXJkfGVufDB8fDB8&ixlib=rb-1.2.1&w=1000&q=80");
+  background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.294), rgba(12, 10, 11, 0.73)), url("https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8Y3V0dGluZyUyMGJvYXJkfGVufDB8fDB8&ixlib=rb-1.2.1&w=1000&q=80");
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */;

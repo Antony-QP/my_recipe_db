@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { history } from 'react-router-dom'
 import RecipeContext from "../../context/recipe/recipeContext";
 import AuthContext from "../../context/auth/auth_Context";
 import RecipeItem from "./Recipe_Item";
@@ -111,6 +112,7 @@ export const Recipe_Form = () => {
 
   const clearAll = () => {
     clearCurrent();
+    history.goBack();
   };
 
   const { title, img, ingredients, method, serves, time } = recipe;
