@@ -3,7 +3,7 @@
 
 
 Ever felt like you keep looking up the same recipe again and again? Ever made changes to recipes and forgotten them? No longer.  
-My_recipe_DB is a place you can safely store all of you recipes and retrieve them with a few finger taps.  Easily add more recipes
+My_recipe_DB is a place you can safely store all of your recipes and retrieve them with a few finger taps.  Easily add more recipes
 to your collection when ever you feel like and they will be right there when you get back.  No more lost notes, no more hassle....
 just cooking. 
 
